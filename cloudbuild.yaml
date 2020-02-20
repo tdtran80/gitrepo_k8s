@@ -22,3 +22,4 @@ steps:
       - '-c'
       - |
         gcloud --verbosity=debug builds list
+logsBucket: 'gs://anz-x-apps-np-687109_cloudbuild'
