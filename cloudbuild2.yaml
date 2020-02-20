@@ -1,0 +1,9 @@
+options:
+  workerPool: anz-cx-cloudbuild-np-9333ec/custom-workers-pool-poc
+steps:
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/anz-x-apps-np-687109/hello-world', '.']
+    timeout: 500s
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/anz-x-apps-np-687109/hello-world']
