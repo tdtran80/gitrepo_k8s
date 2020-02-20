@@ -29,9 +29,6 @@ steps:
       - '-c'
       - |
         gcloud --verbosity=debug container clusters get-credentials --project anz-x-apps-np-687109  --region australia-southeast1 anz-x-apps-np-687109-gke
-  - name: 'gcr.io/cloud-builders/docker'
-    entrypoint: '/bin/cat'
-    args: ['/builder/home/.kube/config']
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['get', 'nodes']
     env:
