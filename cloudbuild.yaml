@@ -1,0 +1,24 @@
+options:
+  workerPool: anz-cx-cloudbuild-np-9333ec/custom-workers-pool-poc
+steps:
+  - name: gcr.io/cloud-builders/docker
+    id: 'build-image with docker'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        docker pull gcr.io/cassandra:latest
+  - name: gcr.io/cloud-builders/gcloud
+    id: 'test cloud sql connectivity'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud --verbosity=debug sql instances list
+  - name: gcr.io/cloud-builders/gcloud
+    id: 'test cloudbuild api connectivity'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud --verbosity=debug builds list
