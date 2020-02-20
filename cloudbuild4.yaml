@@ -1,0 +1,37 @@
+options:
+  workerPool: anz-cx-cloudbuild-dev-5ef683/custom-workers-dev-pool
+steps:
+  # Check Docker version
+  - name: 'gcr.artifactory.gcp.anz/cloud-builders/docker'
+    args: ['version']
+  # ==========================================================
+  # Build the base Docker image.
+  - name: 'gcr.artifactory.gcp.anz/cloud-builders/docker'
+    dir: 'docker-splunk/base/${_BASE_IMAGE}'
+    args: [ 'build',
+            '--build-arg', 'OS_IMAGE=${_OS_IMAGE}',
+            '--build-arg', 'ARTIFACTORY_URL=${_ARTIFACTORY_URL}',
+            '-t', 'base-${_BASE_IMAGE}:latest',
+            '.'
+    ]
+  # Build the Splunk Docker image from the above base image.
+  - name: 'gcr.artifactory.gcp.anz/cloud-builders/docker'
+    dir: 'docker-splunk'
+    args: [ 'build',
+            '-f', './splunk/common-files/Dockerfile',
+            '--build-arg', 'SPLUNK_BASE_IMAGE=base-${_BASE_IMAGE}',
+            '--build-arg', 'SPLUNK_BUILD_URL=${_SPLUNK_LINUX_BUILD_URL}',
+            '-t', 'gcr.io/${PROJECT_ID}/splunk-${_BASE_IMAGE}:${_DOCKER_IMAGE_VERSION}',
+            '.'
+    ]
+# Push the image to the Container Registry
+images:
+  - gcr.io/${PROJECT_ID}/splunk-${_BASE_IMAGE}:${_DOCKER_IMAGE_VERSION}
+# Set default substitutions
+substitutions:
+  _OS_IMAGE: "hub.artifactory.gcp.anz/centos:7"
+  _BASE_IMAGE: "centos-7"
+  _DOCKER_IMAGE_VERSION: "7.3.2"
+  _ARTIFACTORY_URL: "https://artifactory.gcp.anz/cs-binaries-l/centos7"
+  _SPLUNK_LINUX_BUILD_URL: "https://artifactory.gcp.anz/artifactory/list/cs-binaries-l/splunk/splunk-7.3.2-c60db69f8e32-Linux-x86_64.tgz"
+logsBucket: 'gs://anz-cs-splunk-np-0c623e_cloudbuild'
