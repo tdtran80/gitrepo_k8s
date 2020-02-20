@@ -1,9 +1,9 @@
 options:
-  workerPool: anz-cx-cloudbuild-np-9333ec/custom-workers-pool-poc
-steps:
+  workerPool: anz-cx-cloudbuild-dev-5ef683/custom-workers-dev-pool
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/anz-x-apps-np-687109/hello-world', '.']
+    args: ['build', '-t', 'gcr.io/anz-cs-splunk-np-0c623e/hello-world', '.']
     timeout: 500s
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/anz-x-apps-np-687109/hello-world']
+    args: ['push', 'gcr.io/anz-cs-splunk-np-0c623e/hello-world']
+logsBucket: 'gs://anz-cs-splunk-np-0c623e_cloudbuild'
