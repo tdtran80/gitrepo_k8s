@@ -1,0 +1,13 @@
+options:
+  workerPool: anz-cx-cloudbuild-dev-5ef683/custom-workers-dev-pool
+steps:
+  - name: gcr.io/cloud-builders/docker
+    id: 'build-image with docker'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        docker pull hub.artifactory.gcp.anz/postgres:9.6.15
+        docker tag hub.artifactory.gcp.anz/postgres:9.6.15 gcr.io/anz-cs-splunk-np-0c623e/postgres:9.6.15
+        docker push gcr.io/anz-cs-splunk-np-0c623e/postgres:9.6.15
+logsBucket: 'gs://anz-cs-splunk-np-0c623e_cloudbuild'
