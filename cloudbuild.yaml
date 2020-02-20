@@ -27,4 +27,5 @@ steps:
     env:
       - 'CLOUDSDK_COMPUTE_REGION=australia-southeast1'
       - 'CLOUDSDK_CONTAINER_CLUSTER=anz-x-apps-np-687109-gke'
+      - 'https_proxy=10.234.19.195:8118'
 logsBucket: 'gs://anz-x-apps-np-687109_cloudbuild'

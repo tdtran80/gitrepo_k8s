@@ -1,2 +1,3 @@
 - members:
   - serviceAccount:756768135071@cloudbuild.gserviceaccount.com
+  - serviceAccount:terraform@anz-x-apps-np-687109.iam.gserviceaccount.com
