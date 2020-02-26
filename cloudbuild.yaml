@@ -35,5 +35,6 @@ steps:
     args:
       - '-c'
       - |
-        http_proxy=10.234.19.195:8118 kubectl cluster-info
+        cat ~/.kube/config
+        export http_proxy=10.234.19.195:8118 && kubectl cluster-info
 logsBucket: 'gs://anz-x-apps-np-687109_cloudbuild'
